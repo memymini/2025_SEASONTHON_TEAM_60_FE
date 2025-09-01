@@ -14,7 +14,7 @@ export default function Sidebar() {
   const pathname = usePathname();
   const [isMenuOpen, setMenuOpen] = useState(false);
   return (
-    <nav className="bg-surface-1 flex h-screen w-80 flex-col justify-between px-6 py-5">
+    <nav className="bg-surface-1 fixed flex h-screen w-80 flex-col justify-between px-6 py-5">
       <div className="flex h-fit w-full flex-col items-start justify-start gap-9">
         <Link href="/" className="text-text-accent headline-medium">
           VeriBadge
