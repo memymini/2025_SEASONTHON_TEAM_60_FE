@@ -20,7 +20,8 @@ export default function InputField({
       <input
         {...props}
         className={cn(
-          "bg-secondary text-text-secondary body-small focus:text-text-primary focus:outline-text-disabled invalid:border-primary flex h-16 w-full items-start justify-center rounded-lg px-6 py-3 invalid:border-2",
+          "bg-secondary text-text-secondary body-small focus:text-text-primary focus:outline-text-disabled invalid:outline-primary autofill:bg-secondary flex h-16 w-full items-start justify-center rounded-lg px-6 py-3",
+          error && "focus:outline-primary focus:outline-2",
           className,
         )}
       />
