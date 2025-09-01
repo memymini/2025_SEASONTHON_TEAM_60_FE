@@ -6,9 +6,11 @@ export default function PageLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex min-h-screen w-screen">
+    <main className="relative flex min-h-screen">
       <Sidebar />
-      <div className="flex flex-1 flex-col gap-10 px-15 py-12">{children}</div>
+      <div className="ml-80 flex flex-1 flex-col gap-10 px-15 py-12">
+        {children}
+      </div>
     </main>
   );
 }
