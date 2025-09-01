@@ -27,10 +27,7 @@ export default function Button({
   ...props
 }: ButtonProps) {
   return (
-    <button
-      disabled={props.disabled}
-      className={cn(buttonVariants({ size, className }))}
-    >
+    <button {...props} className={cn(buttonVariants({ size, className }))}>
       {children}
     </button>
   );
