@@ -8,6 +8,7 @@ import CheckboxIcon from "@public/assets/checkbox-icon.svg";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 
 export default function SignupPage() {
   const [isChecked, setIsChecked] = useState(false);
@@ -82,7 +83,7 @@ export default function SignupPage() {
                 isChecked ? "text-text-accent" : "text-text-secondary",
               )}
             />
-            <p className="label-large text-text-primary">
+            <p className="body-large text-text-primary">
               [필수]<TextSpan>서비스 이용약관</TextSpan>및
               <TextSpan>개인정보처리방침</TextSpan>에 동의합니다.
             </p>
@@ -97,8 +98,11 @@ export default function SignupPage() {
           </Button>
         </form>
 
-        <p className="label-large text-text-primary">
-          이미 계정이 있으신가요? <TextSpan>로그인</TextSpan>
+        <p className="body-large text-text-primary">
+          이미 계정이 있으신가요?
+          <TextSpan>
+            <Link href="/login">로그인</Link>
+          </TextSpan>
         </p>
       </div>
     </div>
