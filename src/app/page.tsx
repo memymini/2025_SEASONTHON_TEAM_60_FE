@@ -1,3 +1,4 @@
+"use client";
 import Button from "@/components/common/Button";
 import TopBar from "@/components/home/NavBar";
 import Image from "next/image";
@@ -5,6 +6,7 @@ import DocsIcon from "@public/assets/docs-icon.svg?url";
 import LinkIcon from "@public/assets/link-icon.svg?url";
 import VerifyIcon from "@public/assets/verify-icon.svg?url";
 import Footer from "@/components/home/Footer";
+import { useRouter } from "next/navigation";
 
 const steps = [
   {
@@ -30,6 +32,7 @@ const steps = [
 ];
 
 export default function HomePage() {
+  const router = useRouter();
   return (
     <main>
       <TopBar />
@@ -41,8 +44,13 @@ export default function HomePage() {
           <span className="text-text-accent">신뢰</span>를 더하다
         </p>
         <div className="flex gap-6">
-          <Button size="lg">지금 신뢰 얻기</Button>
-          <Button size="lg" className="bg-surface-3 text-text-secondary">
+          <Button size="lg" type="button" onClick={() => router.push("/login")}>
+            지금 신뢰 얻기
+          </Button>
+          <Button
+            size="lg"
+            className="bg-surface-3 text-text-secondary hover:bg-surface-3 hover:opacity-70"
+          >
             확장 프로그램 다운로드
           </Button>
         </div>
