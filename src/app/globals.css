@@ -113,7 +113,7 @@
 }
 
 body {
-  background: var(--background);
+  background: var(--surface-2);
   color: var(--foreground);
   font-family: var(--font-sans-kor), var(--font-sans), system-ui, sans-serif;
 }
