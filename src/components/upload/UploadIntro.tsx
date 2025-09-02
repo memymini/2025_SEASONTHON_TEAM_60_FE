@@ -13,7 +13,7 @@ export default function UploadIntro() {
             <a href="https://hometax.go.kr" className="underline">
               국세청 홈택스
             </a>
-            에서 발급한 <strong>‘소득금액증명원'</strong>만 인정됩니다.
+            에서 발급한 <strong>소득금액증명원</strong>만 인정됩니다.
           </p>
         </div>
         <div className="flex items-center gap-1">
@@ -27,7 +27,7 @@ export default function UploadIntro() {
           <ConfirmIcon />
           <p>
             제출된 서류는 인증 즉시 파기되며, 저희는 오직
-            <strong>‘소득 구간'</strong>
+            <strong>소득 구간</strong>
             정보만을 저장합니다.
           </p>
         </div>
