@@ -30,7 +30,7 @@ export default function SignupPage() {
   const onSubmit = () => {};
 
   return (
-    <div className="flex h-full min-h-screen w-full items-center justify-center">
+    <div className="flex h-full min-h-screen w-full items-center justify-center py-10">
       <div className="bg-surface-1 border-surface-3 flex h-fit w-fit flex-col items-center justify-start gap-6 rounded-xl border-1 px-12 py-15">
         <h1 className="headline-medium text-text-primary text-center">
           VeriBadge 가입하기
