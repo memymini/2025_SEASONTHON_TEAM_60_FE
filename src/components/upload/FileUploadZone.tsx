@@ -1,11 +1,14 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Section from "../common/Section";
 import FileUpload from "./FileUpload";
 import { useFileUploadMutation } from "@/hooks/useFileUpload";
 import UploadIcon from "@public/assets/upload-icon.svg";
 import Button from "../common/Button";
+import { useModalStore } from "@/stores/modal";
+import UploadModal from "./UploadModal";
 export default function FileUploadZone() {
+  const { open } = useModalStore();
   const {
     mutateAsync,
     isPending,
@@ -109,7 +112,11 @@ export default function FileUploadZone() {
           </FileUpload>
         )}
       </Section>
-      <Button size="md" disabled={!hasFiles}>
+      <Button
+        onClick={() => open(<UploadModal />)}
+        size="md"
+        disabled={!hasFiles}
+      >
         제출하기
       </Button>
     </div>
