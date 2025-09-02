@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import Providers from "./QueryProvider";
+import ModalProvider from "./ModalProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +33,7 @@ export default function RootLayout({
     <html lang="ko" className={notoSans.className}>
       <body className={`${geistSans.variable} overflow-y-auto antialiased`}>
         <Providers>{children}</Providers>
+        <ModalProvider />
       </body>
     </html>
   );
