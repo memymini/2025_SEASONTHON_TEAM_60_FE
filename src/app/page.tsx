@@ -2,13 +2,20 @@
 import Button from "@/components/common/Button";
 import TopBar from "@/components/home/NavBar";
 import Image from "next/image";
-import DocsIcon from "@public/assets/docs-icon.svg?url";
-import LinkIcon from "@public/assets/link-icon.svg?url";
-import VerifyIcon from "@public/assets/verify-icon.svg?url";
+import DocsIcon from "@public/assets/docs-icon.svg";
+import LinkIcon from "@public/assets/link-icon.svg";
+import VerifyIcon from "@public/assets/verify-icon.svg";
 import Footer from "@/components/home/Footer";
 import { useRouter } from "next/navigation";
 
-const steps = [
+type IconComp = React.ComponentType<React.SVGProps<SVGSVGElement>>;
+
+const steps: {
+  id: number;
+  icon: IconComp;
+  title: string;
+  description: string;
+}[] = [
   {
     id: 1,
     icon: DocsIcon,
@@ -61,17 +68,21 @@ export default function HomePage() {
           단 3단계로 당신의 전문성을 증명하세요.
         </p>
         <div className="flex h-fit w-fit items-start gap-28">
-          {steps.map((step, idx) => (
+          {steps.map(({ id, icon: IconComp, title, description }) => (
             <div
-              key={idx}
+              key={id}
               className="flex max-w-336 flex-col items-center justify-center gap-6"
             >
               <div className="bg-primary flex h-18 w-18 items-center justify-center rounded-full">
-                <Image src={step.icon} alt="icon" className="h-8 w-8" />
+                <IconComp
+                  width={32}
+                  height={32}
+                  className="text-text-inverse h-8 w-8"
+                />
               </div>
-              <p className="headline-small text-text-primary">{step.title}</p>
+              <p className="headline-small text-text-primary">{title}</p>
               <p className="title-medium text-text-secondary text-center whitespace-pre-line">
-                {step.description}
+                {description}
               </p>
             </div>
           ))}
