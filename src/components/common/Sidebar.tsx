@@ -7,14 +7,13 @@ import BadgeIcon from "@public/assets/badge-icon.svg";
 import ProfileIcon from "@public/assets/profile-icon.svg";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/cn";
-import Button from "./Button";
 import { useState } from "react";
 
 export default function Sidebar() {
   const pathname = usePathname();
   const [isMenuOpen, setMenuOpen] = useState(false);
   return (
-    <nav className="bg-surface-1 fixed flex h-screen w-80 flex-col justify-between px-6 py-5">
+    <aside className="bg-surface-1 fixed flex h-screen w-80 flex-col justify-between px-6 py-5">
       <div className="flex h-fit w-full flex-col items-start justify-start gap-9">
         <Link href="/" className="text-text-accent headline-medium">
           VeriBadge
@@ -28,7 +27,7 @@ export default function Sidebar() {
             </NavItem>
           </li>
 
-          <li className="flex flex-col gap-4">
+          <li className="flex cursor-pointer flex-col gap-4">
             <NavItem
               active={pathname.startsWith("/verify")}
               onToggle={() => setMenuOpen((v) => !v)}
@@ -67,11 +66,16 @@ export default function Sidebar() {
           </li>
         </ul>
       </div>
-
-      <Button size="md" className="w-full">
-        로그아웃
-      </Button>
-    </nav>
+      <div className="flex items-end justify-between">
+        <div className="flex flex-col">
+          <p className="title-small text-text-primary">name</p>
+          <p className="body-small text-text-primary">name@example.com</p>
+        </div>
+        <p className="body-small text-text-primary cursor-pointer underline">
+          로그아웃
+        </p>
+      </div>
+    </aside>
   );
 }
 
@@ -135,7 +139,7 @@ function SubNavLink({
       href={href}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "body-small text-text-secondary flex h-fit w-full items-center justify-start gap-5",
+        "body-small text-text-secondary flex h-fit w-full cursor-pointer items-center justify-start gap-5",
         active ? "text-text-accent font-bold" : "hover:text-text-primary",
       )}
     >

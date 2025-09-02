@@ -9,7 +9,7 @@ export default function StatusPage() {
           제출하신 서류의 처리 과정을 확인하세요.
         </p>
       </div>
-      <StatusStep current="PENDING" />
+      <StatusStep />
     </div>
   );
 }

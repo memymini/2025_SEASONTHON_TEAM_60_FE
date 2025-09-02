@@ -1,10 +1,36 @@
+"use client";
+
 import { MyBadgesDTO } from "@/app/(pages)/my-badges/page";
 import Section from "@/components/common/Section";
 import CopyIcon from "@public/assets/copy-icon.svg";
 import LinkIcon from "@public/assets/link-icon.svg";
+import CheckIcon from "@public/assets/check-icon.svg";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function ConnectedChannel({ data }: { data: MyBadgesDTO }) {
+  const [copied, setCopied] = useState(false);
+  const handleCopy = async () => {
+    const text = data?.badgeTag ?? "";
+    if (!text) return;
+
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      // fallback
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    } finally {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+    }
+  };
   return (
     <Section className="flex-col">
       <p className="headline-small text-text-primary">
@@ -27,7 +53,19 @@ export default function ConnectedChannel({ data }: { data: MyBadgesDTO }) {
           <div className="body-small text-text-secondary bg-surface-3 flex w-fit items-center justify-center rounded-lg px-4 py-3">
             {data.badgeTag}
           </div>
-          <CopyIcon className="text-text-secondary" />
+
+          <button
+            type="button"
+            onClick={handleCopy}
+            aria-label="badge 태그 복사"
+            title={copied ? "복사됨" : "복사"}
+          >
+            {copied ? (
+              <CheckIcon className="text-text-secondary" />
+            ) : (
+              <CopyIcon className="text-text-secondary" />
+            )}
+          </button>
         </div>
       </div>
     </Section>

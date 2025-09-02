@@ -1,18 +1,22 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Section from "../common/Section";
 import FileUpload from "./FileUpload";
 import { useFileUploadMutation } from "@/hooks/useFileUpload";
 import UploadIcon from "@public/assets/upload-icon.svg";
+import Button from "../common/Button";
+import { useModalStore } from "@/stores/modal";
+import UploadModal from "./UploadModal";
 export default function FileUploadZone() {
+  const { open } = useModalStore();
   const {
     mutateAsync,
-    isPending, // 로딩
-    error, // Error 객체
-    data, // FileInfo[] 결과
-    progress, // {0: 0~100, 1: ...}
-    reset, // 뮤테이션 상태 초기화
-    resetProgress, // 진행률 초기화(커스텀)
+    isPending,
+    error,
+    data,
+    progress,
+    reset,
+    resetProgress,
   } = useFileUploadMutation();
 
   // 미리보기 URL 정리
@@ -32,8 +36,8 @@ export default function FileUploadZone() {
   };
   const hasFiles = (data?.length ?? 0) > 0;
   return (
-    <div>
-      <Section className="bg-opacity-100 justify-center rounded-xl border-4 border-dashed py-40">
+    <div className="flex flex-col gap-10">
+      <Section className="bg-opacity-100 h-100 items-center justify-center rounded-xl border-4 border-dashed">
         {/* 1. 업로드 중(애니메이션 추가 예정) */}
         {isPending && (
           <div className="flex w-full flex-col items-center justify-center gap-3">
@@ -43,7 +47,7 @@ export default function FileUploadZone() {
         )}
 
         {/* 2. 업로드 완료 */}
-        {!isPending && hasFiles && (
+        {hasFiles && (
           <div className="flex w-full max-w-[720px] flex-col items-center gap-4 px-6">
             <p className="title-large text-text-primary">선택된 파일</p>
 
@@ -108,6 +112,13 @@ export default function FileUploadZone() {
           </FileUpload>
         )}
       </Section>
+      <Button
+        onClick={() => open(<UploadModal />)}
+        size="md"
+        disabled={!hasFiles}
+      >
+        제출하기
+      </Button>
     </div>
   );
 }

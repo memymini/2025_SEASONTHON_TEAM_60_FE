@@ -45,7 +45,9 @@ export default function MyBadgesPage() {
       {/* 채널 연결 후 UI */}
       <div className="flex flex-col gap-10">
         <ConnectedChannel data={data} />
-        <Button size="md">확장 프로그램 다운로드</Button>
+        <Button href="/download" size="md">
+          확장 프로그램 다운로드
+        </Button>
       </div>
     </div>
   );
