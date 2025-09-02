@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={notoSans.className}>
-      <body className={`${geistSans.variable} antialiased`}>
+      <body className={`${geistSans.variable} overflow-y-auto antialiased`}>
         <Providers>{children}</Providers>
       </body>
     </html>

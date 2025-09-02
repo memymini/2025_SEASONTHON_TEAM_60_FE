@@ -8,7 +8,7 @@ export default function PageLayout({
   return (
     <main className="relative flex min-h-screen">
       <Sidebar />
-      <div className="ml-80 flex flex-1 flex-col gap-10 px-15 py-12">
+      <div className="ml-80 flex flex-1 flex-col gap-10 overflow-y-auto px-15 py-12">
         {children}
       </div>
     </main>
