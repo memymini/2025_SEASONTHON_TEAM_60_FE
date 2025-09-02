@@ -1,3 +1,4 @@
+import Button from "@/components/common/Button";
 import NoBadge from "@/components/common/NoBadge";
 import ConnectChannel from "@/components/my-badges/ConnectChannel";
 import ConnectedChannel from "@/components/my-badges/ConnectedChannel";
@@ -42,7 +43,10 @@ export default function MyBadgesPage() {
       <ConnectChannel />
 
       {/* 채널 연결 후 UI */}
-      <ConnectedChannel data={data} />
+      <div className="flex flex-col gap-10">
+        <ConnectedChannel data={data} />
+        <Button size="md">확장 프로그램 다운로드</Button>
+      </div>
     </div>
   );
 }
