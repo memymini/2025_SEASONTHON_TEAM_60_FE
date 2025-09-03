@@ -1,8 +1,8 @@
 import Section from "@/components/common/Section";
 import Button from "@/components/common/Button";
-import { BadgeResponse } from "@/app/(pages)/dashboard/page";
+import { DashboardResponse } from "@/api/dashboard";
 
-export default function Badge({ data }: { data: BadgeResponse }) {
+export default function Badge({ data }: { data: DashboardResponse }) {
   return (
     <Section>
       <div className="flex h-full flex-1 flex-col gap-5">
