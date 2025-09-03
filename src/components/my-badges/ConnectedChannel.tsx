@@ -1,14 +1,14 @@
 "use client";
 
-import { MyBadgesDTO } from "@/app/(pages)/my-badges/page";
 import Section from "@/components/common/Section";
 import CopyIcon from "@public/assets/copy-icon.svg";
 import LinkIcon from "@public/assets/link-icon.svg";
 import CheckIcon from "@public/assets/check-icon.svg";
 import Link from "next/link";
 import { useState } from "react";
+import { MyBadgesResponse } from "@/api/my-badges";
 
-export default function ConnectedChannel({ data }: { data: MyBadgesDTO }) {
+export default function ConnectedChannel({ data }: { data: MyBadgesResponse }) {
   const [copied, setCopied] = useState(false);
   const handleCopy = async () => {
     const text = data?.badgeTag ?? "";
@@ -42,7 +42,7 @@ export default function ConnectedChannel({ data }: { data: MyBadgesDTO }) {
           <div className="body-small text-text-secondary bg-surface-3 flex max-w-80 items-center justify-center rounded-lg px-4 py-3">
             <p className="truncate">{data.channelUrl}</p>
           </div>
-          <Link href={data.channelUrl}>
+          <Link href={data.channelUrl ? data.channelUrl : ""}>
             <LinkIcon className="text-text-secondary h-6 w-6" />
           </Link>
         </div>
