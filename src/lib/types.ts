@@ -2,7 +2,7 @@
 export type Role = "USER" | "ADMIN";
 
 // badge level type ** 추가 예정 **
-export type BadgeLevel = "SILVER" | null;
+export type BadgeLevel = "SILVER" | "GOLD";
 
 // status type
 export type Status =
