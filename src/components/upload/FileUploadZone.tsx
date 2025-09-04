@@ -1,44 +1,80 @@
 "use client";
-import { useEffect, useState } from "react";
+
+import { useEffect, useMemo, useState } from "react";
 import Section from "../common/Section";
 import FileUpload from "./FileUpload";
-import { useFileUploadMutation } from "@/hooks/useFileUpload";
+import { useUploadMutation } from "@/hooks/useFileUpload";
 import UploadIcon from "@public/assets/upload-icon.svg";
 import Button from "../common/Button";
 import { useModalStore } from "@/stores/modal";
 import UploadModal from "./UploadModal";
+import type { UploadRequest } from "@/api/upload";
+
 export default function FileUploadZone() {
   const { open } = useModalStore();
-  const {
-    mutateAsync,
-    isPending,
-    error,
-    data,
-    progress,
-    reset,
-    resetProgress,
-  } = useFileUploadMutation();
 
-  // 미리보기 URL 정리
+  // 로컬 선택 파일 & 미리보기
+  const [file, setFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+  const { mutateAsync, isPending, reset } = useUploadMutation();
+
+  // 파일 선택 시 미리보기 URL 생성/정리
   useEffect(() => {
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    setPreviewUrl(url);
     return () => {
-      data?.forEach((f) => f.url && URL.revokeObjectURL(f.url));
+      URL.revokeObjectURL(url);
     };
-  }, [data]);
+  }, [file]);
+
+  const hasFile = !!file;
 
   const handleSelect = async (files: File[]) => {
-    await mutateAsync(files);
+    const f = files?.[0];
+    if (!f) return;
+    setFile(f);
+    reset();
   };
 
   const handleClear = () => {
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    setPreviewUrl(null);
+    setFile(null);
     reset();
-    resetProgress();
   };
-  const hasFiles = (data?.length ?? 0) > 0;
+
+  // 실제 제출 (API 호출)
+  const handleSubmit = async () => {
+    if (!file) return;
+
+    const body: UploadRequest = {
+      fileName: file.name,
+      fileId: file.name, // ← 실제에선 업로드/프리사인 후 받은 id로 대체
+    };
+
+    try {
+      await mutateAsync(body);
+      open(<UploadModal />);
+      setPreviewUrl(null);
+      setFile(null);
+      reset();
+    } catch (e) {
+      // TODO: 에러 UI 처리 필요
+      console.error(e);
+    }
+  };
+
+  const fileSizeMB = useMemo(
+    () => (file ? (file.size / (1024 * 1024)).toFixed(2) : "0.00"),
+    [file],
+  );
+
   return (
     <div className="flex flex-col gap-10">
       <Section className="bg-opacity-100 h-100 items-center justify-center rounded-xl border-4 border-dashed">
-        {/* 1. 업로드 중(애니메이션 추가 예정) */}
+        {/* 1. 업로드 중 */}
         {isPending && (
           <div className="flex w-full flex-col items-center justify-center gap-3">
             <UploadIcon className="h-13 w-13 animate-pulse" />
@@ -46,50 +82,35 @@ export default function FileUploadZone() {
           </div>
         )}
 
-        {/* 2. 업로드 완료 */}
-        {hasFiles && (
-          <div className="flex w-full max-w-[720px] flex-col items-center gap-4 px-6">
+        {/* 2. 파일 선택됨 */}
+        {!isPending && hasFile && (
+          <div className="flex w-full max-w-180 flex-col items-center justify-center gap-4 px-6">
             <p className="title-large text-text-primary">선택된 파일</p>
 
             <ul className="w-full space-y-3">
-              {data!.map((f, i) => (
-                <li key={`${f.name}-${i}`} className="flex items-center gap-3">
-                  {f.url ? (
-                    <img
-                      src={f.url}
-                      alt={f.name}
-                      className="h-12 w-12 rounded object-cover"
-                    />
-                  ) : (
-                    <div className="bg-surface-3 text-text-secondary grid h-12 w-12 place-items-center rounded text-xs">
-                      {f.type.split("/")[1]?.toUpperCase() ?? "FILE"}
-                    </div>
-                  )}
-                  <div className="min-w-0 flex-1">
-                    <p className="text-text-primary truncate">{f.name}</p>
-                    <p className="text-text-secondary text-xs">
-                      {(f.size / (1024 * 1024)).toFixed(2)} MB
-                    </p>
-                    {/* 진행률(이미 완료면 100%) */}
-                    <div className="bg-surface-3 mt-2 h-1.5 w-full rounded">
-                      <div
-                        className="bg-text-accent h-1.5 rounded transition-[width]"
-                        style={{ width: `${progress[i] ?? 100}%` }}
-                      />
-                    </div>
+              <li className="flex items-center justify-center gap-3">
+                {previewUrl ? (
+                  <img
+                    src={previewUrl}
+                    alt={file!.name}
+                    className="h-12 w-12 rounded object-cover"
+                  />
+                ) : (
+                  <div className="bg-surface-3 text-text-secondary grid h-12 w-12 place-items-center rounded text-xs">
+                    {file!.type.split("/")[1]?.toUpperCase() ?? "FILE"}
                   </div>
-                </li>
-              ))}
+                )}
+                <div className="min-w-0">
+                  <p className="text-text-primary truncate">{file!.name}</p>
+                  <p className="text-text-secondary text-xs">{fileSizeMB} MB</p>
+                </div>
+              </li>
             </ul>
 
             <div className="mt-4">
               <button
                 className="text-text-accent text-sm underline"
-                onClick={() => {
-                  // 메모리 정리(미리보기 URL 사용 시)
-                  data!.forEach((f) => f.url && URL.revokeObjectURL(f.url));
-                  handleClear(); // reset() + resetProgress() 내부에서 처리
-                }}
+                onClick={handleClear}
               >
                 목록 비우기
               </button>
@@ -98,7 +119,7 @@ export default function FileUploadZone() {
         )}
 
         {/* 3. 업로드 전 */}
-        {!isPending && !hasFiles && (
+        {!isPending && !hasFile && (
           <FileUpload onSelect={handleSelect} multiple={false} maxSizeMB={10}>
             <div className="flex h-fit w-fit flex-col items-center justify-center gap-3">
               <UploadIcon className="h-13 w-13" />
@@ -106,17 +127,14 @@ export default function FileUploadZone() {
                 여기에 파일을 끌어다 놓거나 클릭하여 업로드
               </p>
               <p className="body-large text-text-secondary">
-                지원 파일 형식:PDF, JPG, PNG (최대 10MB)
+                지원 파일 형식: PDF, JPG, PNG (최대 10MB)
               </p>
             </div>
           </FileUpload>
         )}
       </Section>
-      <Button
-        onClick={() => open(<UploadModal />)}
-        size="md"
-        disabled={!hasFiles}
-      >
+
+      <Button onClick={handleSubmit} size="md" disabled={!hasFile || isPending}>
         제출하기
       </Button>
     </div>

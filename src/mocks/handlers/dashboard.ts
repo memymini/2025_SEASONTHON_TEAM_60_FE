@@ -21,7 +21,7 @@ const data: ApiResponse<DashboardResponse> = {
     username: "김지원",
     email: "test1@example.com",
     role: "USER",
-    status: "APPROVED",
+    status: "VERIFIED",
     badgeLevel: "SILVER",
     badgeDate: "2025-09-02",
   },

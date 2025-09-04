@@ -1,24 +1,25 @@
 "use client";
 
-import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { mockLocalUploads } from "@/services/fileUpload";
-import type { FileInfo } from "../schemas/file";
+import { postUpload } from "@/api/upload";
+import type { UploadRequest } from "@/api/upload";
+import type { ApiResponse, AppError } from "@/lib/fetcher";
 
-export function useFileUploadMutation() {
-  const [progress, setProgress] = useState<Record<number, number>>({});
-
-  const mutation = useMutation<FileInfo[], Error, File[]>({
+export function useUploadMutation() {
+  const mutation = useMutation<ApiResponse<void>, AppError, UploadRequest>({
     mutationKey: ["upload", "files"],
-    mutationFn: (files) =>
-      mockLocalUploads(files, (i, pct) =>
-        setProgress((s) => ({ ...s, [i]: pct })),
-      ),
-    onSettled: () => {
-      // 필요하면 완료 후 progress 초기화
-      // setProgress({});
+    mutationFn: async (body) => {
+      const res = await postUpload(body);
+      return res;
     },
+    onError: () => {
+      // 실패 시 진행률 초기화하고 싶으면 열기
+      // 실패시 에러처리 필요
+    },
+    onSettled: () => {},
   });
 
-  return { ...mutation, progress, resetProgress: () => setProgress({}) };
+  return {
+    ...mutation,
+  };
 }
