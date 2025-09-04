@@ -33,7 +33,7 @@ const data: ApiResponse<MyBadgesResponse> = {
   data: {
     username: "김지원",
     email: "test1@example.com",
-    status: "PENDING",
+    status: "SUBMITTED",
     badgeLevel: null,
     badgeDate: null,
     channelUrl: null,

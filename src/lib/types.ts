@@ -5,12 +5,7 @@ export type Role = "USER" | "ADMIN";
 export type BadgeLevel = "SILVER" | "GOLD";
 
 // status type
-export type Status =
-  | "NOT_SUBMITTED"
-  | "PENDING"
-  | "IN_REVIEW"
-  | "APPROVED"
-  | "REJECTED";
+export type Status = "NOT_SUBMITTED" | "SUBMITTED" | "VERIFIED" | "REJECTED";
 
 // date type
 export type Date = [number, number, number] | null;

@@ -30,17 +30,12 @@ const palette: Record<Status, Record<Step, Color>> = {
     step2: "muted",
     step3: "muted",
   },
-  PENDING: {
-    step1: "success",
-    step2: "muted",
-    step3: "muted",
-  },
-  IN_REVIEW: {
+  SUBMITTED: {
     step1: "success",
     step2: "danger",
     step3: "muted",
   },
-  APPROVED: {
+  VERIFIED: {
     step1: "success",
     step2: "success",
     step3: "success",
