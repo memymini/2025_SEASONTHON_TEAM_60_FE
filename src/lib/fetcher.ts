@@ -21,7 +21,7 @@ export type ApiResponse<T> = {
   success: boolean;
   code: string;
   message: string;
-  data: T | null;
+  data?: T;
 };
 
 type ReqOpts<TReq = unknown> = Omit<RequestInit, "body"> & {
