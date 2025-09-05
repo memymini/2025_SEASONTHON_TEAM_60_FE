@@ -4,6 +4,7 @@ import "./globals.css";
 import QueryProviders from "./QueryProvider";
 import ModalProvider from "./ModalProvider";
 import { MSWProvider } from "./MSWProvider";
+import LoadingBar from "@/components/common/Loading";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +35,10 @@ export default function RootLayout({
     <html lang="ko" className={notoSans.className}>
       <body className={`${geistSans.variable} overflow-y-auto antialiased`}>
         <QueryProviders>
-          <MSWProvider>{children}</MSWProvider>
+          <MSWProvider>
+            <LoadingBar />
+            {children}
+          </MSWProvider>
         </QueryProviders>
         <ModalProvider />
       </body>
