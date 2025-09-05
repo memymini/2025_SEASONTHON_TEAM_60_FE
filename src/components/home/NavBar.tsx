@@ -1,5 +1,8 @@
+"use client";
 import Link from "next/link";
-import Button from "@/components/common/Button";
+import KakaoLoginButton from "../common/KakaoLoginButton";
+import { useKakaoLoginQuery } from "@/hooks/useKakaoLogin";
+import { useRouter } from "next/navigation";
 
 export default function NavBar() {
   return (
@@ -19,16 +22,38 @@ export default function NavBar() {
           </Link>
         </li>
         <li>
-          <Link href="/login" className="hover:text-text-primary">
-            로그인
+          <Link href="/dashboard" className="hover:text-text-primary">
+            대시보드
           </Link>
         </li>
         <li>
-          <Button size="sm" href="/signup">
-            회원가입
-          </Button>
+          <KakaoLoginButton />
         </li>
       </ul>
     </header>
+  );
+}
+
+function AuthButton() {
+  const router = useRouter();
+  const handleLogout = async () => {
+    // 서버 로그아웃 API 호출
+    localStorage.resetItem("accessToken");
+    localStorage.resetItem("refreshToken");
+    router.refresh();
+  };
+
+  //if (isLoading) return null;
+
+  return true ? (
+    <button
+      onClick={handleLogout}
+      type="button"
+      className="body-small text-text-secondary hover:text-text-primary underline"
+    >
+      로그아웃
+    </button>
+  ) : (
+    <KakaoLoginButton />
   );
 }
