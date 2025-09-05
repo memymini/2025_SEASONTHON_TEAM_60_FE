@@ -22,7 +22,7 @@ export default function Sidebar() {
         <ul className="flex h-fit w-full flex-col gap-4" id="menu">
           <li>
             <NavItem href="/dashboard" active={pathname === "/dashboard"}>
-              <HomeIcon />
+              <HomeIcon className="size-6" />
               대시보드
             </NavItem>
           </li>
@@ -33,7 +33,7 @@ export default function Sidebar() {
               onToggle={() => setMenuOpen((v) => !v)}
               open={isMenuOpen}
             >
-              <VerifiedIcon />
+              <VerifiedIcon className="size-6" />
               인증센터
             </NavItem>
             {isMenuOpen && (
@@ -54,13 +54,13 @@ export default function Sidebar() {
 
           <li>
             <NavItem href="/my-badges" active={pathname === "/my-badges"}>
-              <BadgeIcon />
+              <BadgeIcon className="size-6" />
               나의 뱃지 관리
             </NavItem>
           </li>
           <li>
             <NavItem href="/account" active={pathname === "/account"}>
-              <ProfileIcon />
+              <ProfileIcon className="size-6" />
               계정관리
             </NavItem>
           </li>
