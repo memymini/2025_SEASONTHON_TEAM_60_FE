@@ -61,10 +61,6 @@ export default function Sidebar() {
         </ul>
       </div>
       <div className="flex items-end justify-between">
-        <div className="flex flex-col">
-          <p className="title-small text-text-primary">name</p>
-          <p className="body-small text-text-primary">name@example.com</p>
-        </div>
         <p className="body-small text-text-primary cursor-pointer underline">
           로그아웃
         </p>

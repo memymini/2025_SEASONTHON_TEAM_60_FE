@@ -14,7 +14,7 @@ export default function NoBadge() {
           <br />
           1차 해커톤에서는 소득 증명 뱃지를 발급받을 수 있습니다.
         </p>
-        <Button size="md" href="/verify/upload">
+        <Button size="md" href="/verify">
           소득 증명 인증 시작하기
         </Button>
       </div>

@@ -9,7 +9,7 @@ const data: ApiResponse<MyBadgesResponse> = {
   data: {
     username: "김지원",
     status: "VERIFIED",
-    badgeLevel: "SILVER",
+    badgeLevel: "GOLD",
     badgeDate: "2025-09-02",
     channelUrl: "Channel url 3",
     badgeTag: "@Veri-SILVER-dhlske",

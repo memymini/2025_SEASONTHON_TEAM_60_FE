@@ -1,10 +1,11 @@
 import { MyBadgesResponse } from "@/api/my-badges";
 import Section from "@/components/common/Section";
+import Image from "next/image";
 
 export default function MyBadge({ data }: { data: MyBadgesResponse }) {
   return (
     <Section>
-      <div className="bg-surface-3 h-full w-40"></div>
+      <Image src="/images/gold.png" alt="gold" width={200} height={40} />
       <div className="flex flex-col gap-12">
         <div className="flex flex-col gap-2.5">
           <p className="text-text-accent body-large">🍓_{data.badgeLevel}</p>

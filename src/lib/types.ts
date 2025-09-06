@@ -2,7 +2,7 @@
 export type Role = "USER" | "ADMIN";
 
 // badge level type
-export type BadgeLevel = "SILVER" | "GOLD";
+export type BadgeLevel = "GOLD" | "PLATINUM" | "DIAMOND" | "DOCTOR";
 
 // status type
 export type Status = "NOT_SUBMITTED" | "SUBMITTED" | "VERIFIED" | "REJECTED";

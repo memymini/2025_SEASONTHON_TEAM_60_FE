@@ -6,4 +6,4 @@ export type StatusResponse = {
 };
 
 export const getStatus = () =>
-  api.get<StatusResponse>("/certificates/income/status/");
+  api.get<StatusResponse>("/certificates/income/status");
