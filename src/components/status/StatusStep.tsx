@@ -4,8 +4,11 @@ import TimerIcon from "@public/assets/timer-icon.svg";
 import VerifiedIcon from "@public/assets/verified-icon.svg";
 import RejectedIcon from "@public/assets/rejected-icon.svg";
 import { cn } from "@/lib/cn";
-import Section from "../common/Section";
+import Section from "@/components/common/Section";
 import { Status, IconComp } from "@/lib/types";
+import { useStatusQuery } from "@/hooks/useStatus";
+import { Skeleton } from "@/components/common/Skeleton";
+import Error from "@/app/error";
 
 const statusVariants = cva(
   "flex w-13 h-13 justify-center items-center rounded-full",
@@ -81,61 +84,66 @@ const data: StatusDTO = {
 };
 
 export function StatusStep() {
-  const current = data.status;
+  const { data, isLoading, isError, error, refetch } = useStatusQuery();
+  if (isLoading) return <Skeleton className="h-100 w-full" />;
+  if (isError) return <Error error={error} reset={refetch} />;
+  if (data) {
+    const current = data.status;
 
-  const steps = STEPS.map((s) =>
-    current === "REJECTED" && s.key === "step3"
-      ? {
-          ...s,
-          label: "승인 거절",
-          description: "승인이 거절되었습니다.",
-          icon: RejectedIcon,
-        }
-      : s,
-  );
+    const steps = STEPS.map((s) =>
+      current === "REJECTED" && s.key === "step3"
+        ? {
+            ...s,
+            label: "승인 거절",
+            description: "승인이 거절되었습니다.",
+            icon: RejectedIcon,
+          }
+        : s,
+    );
 
-  return (
-    <Section className="flex-col">
-      {steps.map(({ key, label, icon: IconComp, description }) => {
-        const tone = palette[current][key];
+    return (
+      <Section className="flex-col">
+        {steps.map(({ key, label, icon: IconComp, description }) => {
+          const tone = palette[current][key];
 
-        return (
-          <div key={key} className="flex gap-6">
-            <div
-              className={statusVariants({
-                tone: palette[current][key],
-              })}
-            >
-              <IconComp className="size-6" />
-            </div>
-            <div className="flex flex-col gap-4 py-2.5">
-              <p
-                className={cn(
-                  "title-small",
-                  tone === "muted"
-                    ? "text-text-secondary"
-                    : "text-text-primary",
-                )}
+          return (
+            <div key={key} className="flex gap-6">
+              <div
+                className={statusVariants({
+                  tone: palette[current][key],
+                })}
               >
-                {label}
-              </p>
-              <p
-                className={cn(
-                  "body-small",
-                  tone === "muted"
-                    ? "text-text-disabled invisible"
-                    : "text-text-primary",
-                )}
-              >
-                {description}
-              </p>
+                <IconComp className="size-6" />
+              </div>
+              <div className="flex flex-col gap-4 py-2.5">
+                <p
+                  className={cn(
+                    "title-small",
+                    tone === "muted"
+                      ? "text-text-secondary"
+                      : "text-text-primary",
+                  )}
+                >
+                  {label}
+                </p>
+                <p
+                  className={cn(
+                    "body-small",
+                    tone === "muted"
+                      ? "text-text-disabled invisible"
+                      : "text-text-primary",
+                  )}
+                >
+                  {description}
+                </p>
+              </div>
             </div>
-          </div>
-        );
-      })}
-      <p className="body-small text-text-secondary text-center">
-        인증이 완료되면 이메일로 알려드립니다. 조금만 기다려주세요.
-      </p>
-    </Section>
-  );
+          );
+        })}
+        <p className="body-small text-text-secondary text-center">
+          인증이 완료되면 이메일로 알려드립니다. 조금만 기다려주세요.
+        </p>
+      </Section>
+    );
+  }
 }
