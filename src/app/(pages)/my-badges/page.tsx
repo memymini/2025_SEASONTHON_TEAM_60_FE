@@ -1,5 +1,5 @@
 "use client";
-
+import Error from "@/app/error";
 import Button from "@/components/common/Button";
 import NoBadge from "@/components/common/NoBadge";
 import { MyBadgesSkeleton } from "@/components/common/Skeleton";
@@ -22,13 +22,15 @@ export interface MyBadgesDTO {
 }
 
 export default function MyBadgesPage() {
-  const { data, isLoading, isError } = useMyBadgesQuery();
+  const { data, isLoading, isError, error, refetch } = useMyBadgesQuery();
 
-  if (isError) return <div>error</div>;
+  if (isError) return <Error error={error} reset={refetch} />;
 
   return (
     <div className="flex h-fit w-full flex-col gap-10">
-      <h1 className="headline-large">나의 뱃지 및 고유 태그</h1>
+      <h1 className="headline-large text-text-primary">
+        나의 뱃지 및 고유 태그
+      </h1>
       {isLoading ? (
         <MyBadgesSkeleton />
       ) : (
