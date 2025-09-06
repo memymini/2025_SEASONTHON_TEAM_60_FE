@@ -6,7 +6,6 @@ import FileUpload from "./FileUpload";
 import { useUploadMutation } from "@/hooks/useFileUpload";
 import UploadIcon from "@public/assets/upload-icon.svg";
 import Button from "../common/Button";
-import type { UploadRequest } from "@/api/upload";
 
 export default function FileUploadZone() {
   // 로컬 선택 파일 & 미리보기
@@ -45,13 +44,8 @@ export default function FileUploadZone() {
   const handleSubmit = async () => {
     if (!file) return;
 
-    const body: UploadRequest = {
-      fileName: file.name,
-      fileId: file.name, // ← 실제에선 업로드/프리사인 후 받은 id로 대체
-    };
-
     try {
-      await mutateAsync(body);
+      await mutateAsync(file);
       setPreviewUrl(null);
       setFile(null);
       reset();

@@ -3,7 +3,6 @@ import { BadgeLevel, Status } from "@/lib/types";
 
 export type MyBadgesResponse = {
   username: string;
-  email: string;
   status: Status;
   badgeLevel: BadgeLevel | null;
   badgeDate: string | null;

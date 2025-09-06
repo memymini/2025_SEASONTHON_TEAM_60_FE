@@ -1,9 +1,10 @@
 import { api } from "@/lib/fetcher";
 
 export type KakaoLoginResponse = {
-  accessToken: string;
-  refreshToken: string;
+  userId: number;
+  username: string;
+  token: string;
 };
 
 export const getKakaoLogin = () =>
-  api.get<KakaoLoginResponse>("/auth/kakao/callback");
+  api.get<KakaoLoginResponse>("/oauth2/authorization/kakao");

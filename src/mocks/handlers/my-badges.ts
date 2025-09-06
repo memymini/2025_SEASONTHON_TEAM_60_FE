@@ -8,7 +8,6 @@ const data: ApiResponse<MyBadgesResponse> = {
   message: "메인페이지 불러오기 성공",
   data: {
     username: "김지원",
-    email: "test1@example.com",
     status: "VERIFIED",
     badgeLevel: "SILVER",
     badgeDate: "2025-09-02",
@@ -20,7 +19,6 @@ const data: ApiResponse<MyBadgesResponse> = {
   //   message: "메인페이지 불러오기 성공",
   //   data: {
   //     username: "김지원",
-  //     email: "test1@example.com",
   //     status: "APPROVED",
   //     badgeLevel: "SILVER",
   //     badgeDate: "2025-09-02",
@@ -32,7 +30,6 @@ const data: ApiResponse<MyBadgesResponse> = {
   //   message: "메인페이지 불러오기 성공",
   //   data: {
   //     username: "김지원",
-  //     email: "test1@example.com",
   //     status: "SUBMITTED",
   //     badgeLevel: null,
   //     badgeDate: null,

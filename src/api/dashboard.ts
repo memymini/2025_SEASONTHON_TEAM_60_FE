@@ -3,11 +3,10 @@ import { BadgeLevel, Role, Status } from "@/lib/types";
 
 export type DashboardResponse = {
   username: string;
-  email: string;
   role: Role;
   status: Status;
   badgeLevel: BadgeLevel | null;
   badgeDate: string | null;
 };
 
-export const getDashboard = () => api.get<DashboardResponse>("/");
+export const getDashboard = () => api.get<DashboardResponse>("/main");

@@ -1,37 +1,38 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useKakaoLoginQuery } from "@/hooks/useKakaoLogin";
+import { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import Loading from "@/components/common/Loading";
-import Error from "@/app/error";
 
-export default function KakaoCallbackPage() {
+function KakaoCallbackContent() {
   const router = useRouter();
-  const { data, isPending, isError, error, refetch } = useKakaoLoginQuery();
-  if (isError) return <Error error={error} reset={refetch} />;
+  const searchParams = useSearchParams();
 
-  if (data) {
-    localStorage.setItem("accessToken", data.accessToken);
-    localStorage.setItem("refreshToken", data.refreshToken);
-    router.replace("/dashboard");
-    return;
-  }
-  router.replace("/");
+  useEffect(() => {
+    const token = searchParams.get("token");
+    if (token) {
+      localStorage.setItem("token", token);
+      router.replace("/dashboard");
+    }
+  }, [searchParams, router]);
 
   return (
     <div className="fixed inset-0 z-[9999]">
       <Loading />
       <div className="grid h-full place-items-center">
         <div className="border-surface-3 rounded-md border bg-white/80 px-6 py-4 shadow backdrop-blur">
-          <p className="body-medium">
-            {isPending
-              ? "카카오 로그인 처리 중…"
-              : isError
-                ? "로그인 실패, 이동 중…"
-                : "완료, 이동 중…"}
-          </p>
+          <p className="body-medium">로그인 처리 중...</p>
         </div>
       </div>
     </div>
+  );
+}
+
+export default function KakaoCallbackPage() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <KakaoCallbackContent />
+    </Suspense>
   );
 }

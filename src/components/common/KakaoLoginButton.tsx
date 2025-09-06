@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function KakaoLoginButton() {
   const handleKakaoLogin = () => {
     window.location.assign(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/kakao/authorize?returnTo=${encodeURIComponent(location.pathname + location.search)}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/kakao`,
     );
   };
   return (
