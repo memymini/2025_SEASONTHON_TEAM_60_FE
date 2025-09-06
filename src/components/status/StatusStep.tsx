@@ -1,3 +1,4 @@
+"use client";
 import { cva } from "class-variance-authority";
 import CheckIcon from "@public/assets/check-icon.svg";
 import TimerIcon from "@public/assets/timer-icon.svg";
@@ -76,12 +77,6 @@ const STEPS: {
     description: "인증이 완료되었습니다.",
   },
 ];
-interface StatusDTO {
-  status: Status;
-}
-const data: StatusDTO = {
-  status: "VERIFIED",
-};
 
 export function StatusStep() {
   const { data, isLoading, isError, error, refetch } = useStatusQuery();
