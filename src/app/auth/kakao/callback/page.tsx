@@ -3,10 +3,12 @@
 import { useRouter } from "next/navigation";
 import { useKakaoLoginQuery } from "@/hooks/useKakaoLogin";
 import Loading from "@/components/common/Loading";
+import Error from "@/app/error";
 
 export default function KakaoCallbackPage() {
   const router = useRouter();
-  const { data, isPending, isError } = useKakaoLoginQuery();
+  const { data, isPending, isError, error, refetch } = useKakaoLoginQuery();
+  if (isError) return <Error error={error} reset={refetch} />;
 
   if (data) {
     localStorage.setItem("accessToken", data.accessToken);
