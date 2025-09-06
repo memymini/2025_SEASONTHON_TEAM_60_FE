@@ -8,7 +8,6 @@ const data: ApiResponse<DashboardResponse> = {
   //   message: "메인페이지 불러오기 성공",
   //   data: {
   //     username: "김지원",
-  //     email: "test1@example.com",
   //     role: "USER",
   //     status: "NOT_SUBMITTED",
   //     badgeLevel: null,
@@ -19,7 +18,6 @@ const data: ApiResponse<DashboardResponse> = {
   message: "메인페이지 불러오기 성공",
   data: {
     username: "김지원",
-    email: "test1@example.com",
     role: "USER",
     status: "VERIFIED",
     badgeLevel: "SILVER",
@@ -30,7 +28,6 @@ const data: ApiResponse<DashboardResponse> = {
   //   message: "메인페이지 불러오기 성공",
   //   data: {
   //     username: "김지원",
-  //     email: "test1@example.com",
   //     role: "USER",
   //     status: "PENDING",
   //     badgeLevel: null,
@@ -41,4 +38,6 @@ const data: ApiResponse<DashboardResponse> = {
   //   message: "로그인한 사용자를 찾을 수 없습니다.",
 };
 
-export const dashboardHandlers = [http.get("/", () => HttpResponse.json(data))];
+export const dashboardHandlers = [
+  http.get("/main", () => HttpResponse.json(data)),
+];
