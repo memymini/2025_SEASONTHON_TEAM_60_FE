@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import { ApiResponse } from "@/lib/fetcher";
+import { ApiResponse } from "@/lib/types";
 import { UploadRequest } from "@/api/upload";
 
 const data: UploadRequest = {

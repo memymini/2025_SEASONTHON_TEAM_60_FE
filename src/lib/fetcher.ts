@@ -1,28 +1,7 @@
+import { ApiResponse, AppError } from "./types";
 // ---------- errors / common ----------
-export type AppErrorKind = "network" | "http" | "api" | "unknown";
-
-export class AppError extends Error {
-  kind: AppErrorKind;
-  status?: number;
-  code?: string;
-  details?: unknown;
-  constructor(kind: AppErrorKind, msg: string, extra?: Partial<AppError>) {
-    super(msg);
-    Object.setPrototypeOf(this, new.target.prototype);
-    this.name = "AppError";
-    this.kind = kind;
-    Object.assign(this, extra);
-  }
-}
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
-
-export type ApiResponse<T> = {
-  success: boolean;
-  code: string;
-  message: string;
-  data?: T;
-};
 
 type ReqOpts<TReq = unknown> = Omit<RequestInit, "body"> & {
   params?: Record<string, string | number | boolean | null | undefined>;
@@ -80,20 +59,32 @@ export async function apiFetch<TRes, TReq = unknown>(
     throw new AppError("network", "네트워크 오류", { details: e });
   }
 
-  // HTTP 에러
+  // HTTP 에러 처리
   if (!res.ok) {
-    try {
-      const maybe = await parseJson<ApiResponse<unknown>>(res);
-      if (maybe && typeof maybe === "object" && "success" in maybe) {
-        throw new AppError("api", maybe.message || "API 오류", {
-          status: res.status,
-          code: maybe.code,
-          details: maybe,
-        });
+    const maybe = await parseJson<ApiResponse<unknown>>(res).catch(() => null);
+
+    // API 포맷 응답이면서 4xx인 경우 → throw 하지 않고 payload로 반환
+    if (maybe && typeof maybe === "object" && "success" in maybe) {
+      const appErr = new AppError("api", maybe.message || "API 오류", {
+        status: res.status,
+        code: maybe.code,
+        details: maybe,
+      });
+
+      if (res.status >= 400 && res.status < 500) {
+        return {
+          success: false,
+          code: maybe.code ?? "CLIENT_ERROR",
+          message: maybe.message ?? "요청 오류",
+          data: undefined as unknown as TRes,
+        };
       }
-    } catch {
-      /* ignore */
+
+      // 5xx 이상 -> throw
+      throw appErr;
     }
+
+    // API 포맷이 아니거나 파싱 실패 -> throw
     throw new AppError("http", `HTTP ${res.status}`, { status: res.status });
   }
 

@@ -8,7 +8,7 @@ export default function UploadIntro() {
       </p>
       <div className="text-text-primary body-large flex flex-col gap-4">
         <div className="flex items-center gap-1">
-          <ConfirmIcon />
+          <ConfirmIcon className="text-text-accent size-6" />
           <p>
             <a href="https://hometax.go.kr" className="underline">
               국세청 홈택스
@@ -17,14 +17,14 @@ export default function UploadIntro() {
           </p>
         </div>
         <div className="flex items-center gap-1">
-          <ConfirmIcon />
+          <ConfirmIcon className="text-text-accent size-6" />
           <p>
             주민등록번호 뒷자리는 <strong>반드시 가리고</strong> 업로드
             해주세요.
           </p>
         </div>
         <div className="flex items-center gap-1">
-          <ConfirmIcon />
+          <ConfirmIcon className="text-text-accent size-6" />
           <p>
             제출된 서류는 인증 즉시 파기되며, 저희는 오직
             <strong>소득 구간</strong>

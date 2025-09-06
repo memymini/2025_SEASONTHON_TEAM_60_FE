@@ -26,9 +26,9 @@ export function MSWProvider({ children }: MSWProviderProps) {
     }
   }, []);
 
-  if (process.env.NODE_ENV === "development" && !mswReady) {
-    return <div>Loading...</div>;
-  }
+  //   if (process.env.NODE_ENV === "development" && !mswReady) {
+  //     return <div>Loading..</div>;
+  //   }
 
   return <>{children}</>;
 }

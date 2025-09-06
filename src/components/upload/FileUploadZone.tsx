@@ -6,13 +6,9 @@ import FileUpload from "./FileUpload";
 import { useUploadMutation } from "@/hooks/useFileUpload";
 import UploadIcon from "@public/assets/upload-icon.svg";
 import Button from "../common/Button";
-import { useModalStore } from "@/stores/modal";
-import UploadModal from "./UploadModal";
 import type { UploadRequest } from "@/api/upload";
 
 export default function FileUploadZone() {
-  const { open } = useModalStore();
-
   // 로컬 선택 파일 & 미리보기
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -45,7 +41,7 @@ export default function FileUploadZone() {
     reset();
   };
 
-  // 실제 제출 (API 호출)
+  // 제출
   const handleSubmit = async () => {
     if (!file) return;
 
@@ -56,12 +52,10 @@ export default function FileUploadZone() {
 
     try {
       await mutateAsync(body);
-      open(<UploadModal />);
       setPreviewUrl(null);
       setFile(null);
       reset();
     } catch (e) {
-      // TODO: 에러 UI 처리 필요
       console.error(e);
     }
   };

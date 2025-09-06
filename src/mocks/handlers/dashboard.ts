@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import { ApiResponse } from "@/lib/fetcher";
+import { ApiResponse } from "@/lib/types";
 import { DashboardResponse } from "@/api/dashboard";
 
 const data: ApiResponse<DashboardResponse> = {

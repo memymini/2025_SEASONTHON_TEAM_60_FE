@@ -7,11 +7,9 @@ import BadgeIcon from "@public/assets/badge-icon.svg";
 import ProfileIcon from "@public/assets/profile-icon.svg";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/cn";
-import { useState } from "react";
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const [isMenuOpen, setMenuOpen] = useState(false);
   return (
     <aside className="bg-surface-1 fixed flex h-screen w-80 flex-col justify-between px-6 py-5">
       <div className="flex h-fit w-full flex-col items-start justify-start gap-9">
@@ -22,21 +20,17 @@ export default function Sidebar() {
         <ul className="flex h-fit w-full flex-col gap-4" id="menu">
           <li>
             <NavItem href="/dashboard" active={pathname === "/dashboard"}>
-              <HomeIcon />
+              <HomeIcon className="size-6" />
               대시보드
             </NavItem>
           </li>
 
           <li className="flex cursor-pointer flex-col gap-4">
-            <NavItem
-              active={pathname.startsWith("/verify")}
-              onToggle={() => setMenuOpen((v) => !v)}
-              open={isMenuOpen}
-            >
-              <VerifiedIcon />
+            <NavItem href="/verify" active={pathname.startsWith("/verify")}>
+              <VerifiedIcon className="size-6" />
               인증센터
             </NavItem>
-            {isMenuOpen && (
+            {pathname.startsWith("/verify") && (
               <ul
                 id="verified-sub-menu"
                 className="text-text-secondary flex flex-col gap-5 py-2.5 pl-8"
@@ -54,13 +48,13 @@ export default function Sidebar() {
 
           <li>
             <NavItem href="/my-badges" active={pathname === "/my-badges"}>
-              <BadgeIcon />
+              <BadgeIcon className="size-6" />
               나의 뱃지 관리
             </NavItem>
           </li>
           <li>
             <NavItem href="/account" active={pathname === "/account"}>
-              <ProfileIcon />
+              <ProfileIcon className="size-6" />
               계정관리
             </NavItem>
           </li>
@@ -80,43 +74,27 @@ export default function Sidebar() {
 }
 
 type CommonProps = {
-  active?: boolean;
+  href: string;
+  active: boolean;
   exact?: boolean;
   className?: string;
   children: React.ReactNode;
 };
 
-type LinkItemProps = CommonProps & { href: string };
-type ToggleItemProps = CommonProps & { onToggle: () => void; open: boolean };
-type NavItemProps = LinkItemProps | ToggleItemProps;
-
-export function NavItem(props: NavItemProps) {
+export function NavItem(props: CommonProps) {
   const NavItemVariants = cn(
     "title-small text-text-secondary flex h-fit w-full items-center justify-start gap-2.5 rounded-lg px-2.5 py-2",
     props.active ? "bg-secondary text-text-accent" : "hover:bg-surface-2",
   );
 
-  if ("href" in props) {
-    return (
-      <Link
-        href={props.href}
-        aria-current={props.active ? "page" : undefined}
-        className={NavItemVariants}
-      >
-        {props.children}
-      </Link>
-    );
-  }
-
   return (
-    <button
-      type="button"
-      aria-expanded={props.open}
-      onClick={props.onToggle}
+    <Link
+      href={props.href}
+      aria-current={props.active ? "page" : undefined}
       className={NavItemVariants}
     >
       {props.children}
-    </button>
+    </Link>
   );
 }
 
