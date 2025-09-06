@@ -24,10 +24,15 @@ function buildURL(path: string, params?: ReqOpts["params"]) {
   return url.toString();
 }
 
-async function parseJson<T>(res: Response): Promise<T> {
-  if (res.status === 204) return undefined as unknown as T; // no content
+async function parseJson<T>(res: Response) {
+  if (res.status === 204) return undefined as unknown as T;
   const text = await res.text();
-  return text ? (JSON.parse(text) as T) : (undefined as unknown as T);
+  try {
+    return text ? (JSON.parse(text) as T) : (undefined as unknown as T);
+  } catch {
+    // JSON이 아닐 경우
+    return null as unknown as T;
+  }
 }
 
 // ---------- core fetcher ----------
@@ -39,6 +44,14 @@ export async function apiFetch<TRes, TReq = unknown>(
 
   const url = buildURL(path, params);
   const h = new Headers(headers);
+
+  // localStorage에서 토큰 읽어서 Authorization 헤더 추가
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("token");
+    if (token) {
+      h.set("Authorization", `Bearer ${token}`);
+    }
+  }
 
   // JSON 자동 직렬화 (FormData 등은 body 그대로)
   let body: BodyInit | null | undefined = rawBody ?? null;
@@ -115,10 +128,11 @@ export function apiGet<TRes>(
 
 export function apiPost<TRes, TReq>(
   path: string,
-  json: TReq,
+  json?: TReq,
+  body?: BodyInit | null,
   opts?: Omit<ReqOpts<TReq>, "method" | "json">,
 ): Promise<ApiResponse<TRes>> {
-  return apiFetch<TRes, TReq>(path, { ...opts, method: "POST", json });
+  return apiFetch<TRes, TReq>(path, { ...opts, method: "POST", json, body });
 }
 
 export function apiPut<TRes, TReq>(

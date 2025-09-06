@@ -1,9 +1,12 @@
 import { api } from "@/lib/fetcher";
 
-export type UploadRequest = {
-  fileName: string;
-  fileId: string;
-};
+export const postUpload = (file: File) => {
+  const formData = new FormData();
+  formData.append("file", file);
 
-export const postUpload = (body: UploadRequest) =>
-  api.post<void, UploadRequest>("/certificates/income/upload", body);
+  return api.post<void, void>(
+    "/certificates/income/upload",
+    undefined,
+    formData,
+  );
+};
