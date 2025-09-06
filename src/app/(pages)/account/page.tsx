@@ -1,18 +1,25 @@
+"use client";
 import Button from "@/components/common/Button";
 import Section from "@/components/common/Section";
+import { useAccountQuery } from "@/hooks/useAccount";
 import Image from "next/image";
+import Error from "@/app/error";
+import { Skeleton } from "@/components/common/Skeleton";
 
 export default function AccountPage() {
+  const { data, isLoading, isError, error, refetch } = useAccountQuery();
+
+  if (isError) return <Error error={error} reset={refetch} />;
   return (
     <div className="flex h-fit w-full max-w-300 flex-col gap-10">
       <h1 className="headline-large text-text-primary">계정관리</h1>
       <Section className="flex-col">
         <h2 className="text-text-primary headline-small">기본 프로필</h2>
-        <p className="text-text-primary body-large">
-          김지원
-          <br />
-          jiwon@example.com
-        </p>
+        {isLoading ? (
+          <Skeleton className="h-5 w-full" />
+        ) : (
+          <p className="text-text-primary body-large">{data?.username}</p>
+        )}
         <p className="text-text-secondary body-small">
           안내: 이메일은 회원 식별을 위한 고유 정보이므로 변경할 수 없습니다.
         </p>
@@ -30,23 +37,28 @@ export default function AccountPage() {
         <p className="text-text-secondary body-small">
           안내: 이메일은 회원 식별을 위한 고유 정보이므로 변경할 수 없습니다.
         </p>
-        <div className="border-surface-3 bg-surface-1 flex items-center justify-between rounded-lg border-1 p-4">
-          <div className="flex w-full min-w-0 items-center gap-2">
-            <Image
-              src="/images/youtube-logo.png"
-              alt="youtube-icon"
-              width={27}
-              height={20}
-            />
-            <p className="text-text-primary label-large">Youtube</p>
-            <p className="text-text-secondary body-small truncate">
-              https://youtube.com/veribadge-ehseg29sa39gsa3l2222llaeigafeas
+        {isLoading ? (
+          <Skeleton className="h-5 w-full" />
+        ) : (
+          <div className="border-surface-3 bg-surface-1 flex items-center justify-between rounded-lg border-1 p-4">
+            <div className="flex w-full min-w-0 items-center gap-2">
+              <Image
+                src="/images/youtube-logo.png"
+                alt="youtube-icon"
+                width={27}
+                height={20}
+              />
+              <p className="text-text-primary label-large">Youtube</p>
+
+              <p className="text-text-secondary body-small truncate">
+                {data?.channelUrl}
+              </p>
+            </div>
+            <p className="text-text-accent label-small hover:text-hover whitespace-nowrap underline hover:font-bold">
+              연동 해제
             </p>
           </div>
-          <p className="text-text-accent label-small hover:text-hover whitespace-nowrap underline hover:font-bold">
-            연동 해제
-          </p>
-        </div>
+        )}
       </Section>
       <Section className="border-primary flex-col">
         <h2 className="text-text-accent headline-small">회원 탈퇴</h2>

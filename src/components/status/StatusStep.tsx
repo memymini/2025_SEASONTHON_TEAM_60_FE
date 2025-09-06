@@ -77,7 +77,7 @@ interface StatusDTO {
   status: Status;
 }
 const data: StatusDTO = {
-  status: "NOT_SUBMITTED",
+  status: "VERIFIED",
 };
 
 export function StatusStep() {

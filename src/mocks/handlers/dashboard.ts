@@ -20,7 +20,7 @@ const data: ApiResponse<DashboardResponse> = {
     username: "김지원",
     role: "USER",
     status: "VERIFIED",
-    badgeLevel: "SILVER",
+    badgeLevel: "GOLD",
     badgeDate: "2025-09-02",
   },
   //   success: true,

@@ -1,6 +1,7 @@
 import { IconComp } from "@/lib/types";
 import Label from "../common/Label";
 import { cn } from "@/lib/cn";
+import Link from "next/link";
 
 export type Category = {
   name: string;
@@ -44,7 +45,9 @@ export default function CategoryCard({ data }: { data: Category }) {
           <p className="text-text-secondary body-small">{data.description}</p>
         </div>
         {data.info && (
-          <p className="text-text-accent label-medium">{data.info}</p>
+          <Link href="/verify/intro" className="text-text-accent label-medium">
+            {data.info}
+          </Link>
         )}
       </div>
     </div>

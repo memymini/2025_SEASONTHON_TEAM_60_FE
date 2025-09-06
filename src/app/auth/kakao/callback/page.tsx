@@ -1,21 +1,24 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Suspense } from "react";
 import Loading from "@/components/common/Loading";
 
 function KakaoCallbackContent() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-
   useEffect(() => {
-    const token = searchParams.get("token");
+    const hash = window.location.hash;
+    const params = new URLSearchParams(hash.replace(/^#/, ""));
+    const token = params.get("token");
+
     if (token) {
       localStorage.setItem("token", token);
       router.replace("/dashboard");
+    } else {
+      router.replace("/");
     }
-  }, [searchParams, router]);
+  }, [router]);
 
   return (
     <div className="fixed inset-0 z-[9999]">
@@ -28,7 +31,6 @@ function KakaoCallbackContent() {
     </div>
   );
 }
-
 export default function KakaoCallbackPage() {
   return (
     <Suspense fallback={<Loading />}>

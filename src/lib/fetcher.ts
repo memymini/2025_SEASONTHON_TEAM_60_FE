@@ -45,7 +45,7 @@ export async function apiFetch<TRes, TReq = unknown>(
   const url = buildURL(path, params);
   const h = new Headers(headers);
 
-  // localStorage에서 토큰 읽어서 Authorization 헤더 추가
+  //localStorage에서 토큰 읽어서 Authorization 헤더 추가
   if (typeof window !== "undefined") {
     const token = localStorage.getItem("token");
     if (token) {
@@ -69,6 +69,7 @@ export async function apiFetch<TRes, TReq = unknown>(
       body,
     });
   } catch (e) {
+    console.log(e);
     throw new AppError("network", "네트워크 오류", { details: e });
   }
 
