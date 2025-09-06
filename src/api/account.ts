@@ -5,4 +5,4 @@ export type AccountResponse = {
   channelUrl: string;
 };
 
-export const getAccount = () => api.get<AccountResponse>("/users/me");
+export const getAccount = () => api.get<AccountResponse>("/user/me");
