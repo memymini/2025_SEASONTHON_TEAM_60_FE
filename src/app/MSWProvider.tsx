@@ -1,5 +1,6 @@
 "use client";
 
+import Loading from "@/components/common/Loading";
 import { useEffect, useState } from "react";
 
 interface MSWProviderProps {
@@ -26,9 +27,13 @@ export function MSWProvider({ children }: MSWProviderProps) {
     }
   }, []);
 
-  //   if (process.env.NODE_ENV === "development" && !mswReady) {
-  //     return <div>Loading..</div>;
-  //   }
+  if (process.env.NODE_ENV === "development" && !mswReady) {
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  }
 
   return <>{children}</>;
 }
