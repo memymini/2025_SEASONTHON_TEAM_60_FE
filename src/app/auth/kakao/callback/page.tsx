@@ -23,11 +23,6 @@ function KakaoCallbackContent() {
   return (
     <div className="fixed inset-0 z-[9999]">
       <Loading />
-      <div className="grid h-full place-items-center">
-        <div className="border-surface-3 rounded-md border bg-white/80 px-6 py-4 shadow backdrop-blur">
-          <p className="body-medium">로그인 처리 중...</p>
-        </div>
-      </div>
     </div>
   );
 }
