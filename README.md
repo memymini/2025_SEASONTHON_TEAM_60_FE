@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 2025_SEASONTHON_TEAM_60_FE
 
-## Getting Started
+2025*시즌톤*베리벳지\_프론트엔드
 
-First, run the development server:
+## 🍓 베리뱃지 (VeriBadge)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+온라인 발언에 실명보다 강한 신뢰를 더하다.
+
+사전개발/해커톤 기간 : 2025. 08. 28 ~ 09. 07
+
+## ✨Main 기능
+
+- 회원가입/로그인 (카카오)
+- 자격 인증을 통한 뱃지 발급 (소득 증명서, 의사 증명서 등)
+- 유튜브 채널 연결 후 고유 태그 발급 (구글)
+- 내 계정 관리
+- 관리자 페이지
+- 확장 프로그램 통해 외부 사이트에 적용
+
+## 👥 팀 구성
+
+| 역할   | 이름                   |
+| ------ | ---------------------- |
+| **PM** | 배동혁                 |
+| **FE** | 정민희                 |
+| **BE** | 노영서, 박승준, 탁은혜 |
+
+## 👩‍💻 역할 분담
+
+| 이름   | 역할분담                                                                                 |
+| ------ | ---------------------------------------------------------------------------------------- |
+| 노영서 | API 명세서, ERD, 대시보드 페이지, 나의 뱃지 관리 페이지(유튜브 채널 연결), 관리자 페이지 |
+| 박승준 | API 명세서, 회원가입/로그인(카카오), 소득 증명서 업로드 및 인증                          |
+| 탁은혜 | 확장 프로그램 개발, 의사 증명서 업로드 및 인증, 계정 관리 페이지                         |
+
+## 🛠 기술 스택
+
+### Frontend
+
+- Next.js
+- typescript
+- tanstackQuery
+- zustand
+- zod
+- react hook form
+
+### 인증 & 배포
+
+- OAuth2 (Google, Kakao 로그인)
+- Rendor, Vercel
+
+## 🌳 프로젝트 구조
+
 ```
+2025_SEASONTHON_TEAM_60_FE/
+├── next.config.ts
+├── package-lock.json
+├── package.json
+├── public/
+│   ├── assets/
+│   └── images/
+└── src/
+    ├── api/
+    ├── app/
+    ├── components/
+    ├── hooks/
+    ├── lib/
+    ├── mocks/
+    ├── schemas/
+    ├── services/
+    └── stores/
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
